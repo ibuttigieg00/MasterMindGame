@@ -22,9 +22,12 @@ public class Game {
 
     public void PlayGame(Scanner sc){
         int guesses = 0;
+        int retries = 0;
         List<String> userGuessedColours = new ArrayList<>(difficulty);
 
-        while(guesses != difficulty){
+        while(guesses != difficulty && retries < 10){
+            guesses = 0;
+            userGuessedColours.clear();
             for(int i = 0; i < difficulty; i++){
                 System.out.println("Please enter Colour " +i);
                 userGuessedColours.add(sc.nextLine());
@@ -32,6 +35,8 @@ public class Game {
 
             guesses = GetGuessedColours(userGuessedColours);
             System.out.println("You have guessed  " +guesses + " in their position");
+            System.out.println(10 - retries + " retries remaining");
+            retries ++;
         }
     }
 
@@ -39,10 +44,8 @@ public class Game {
         int guessedColoursInTheirPositions = 0;
 
         for (int i=0; i < userGuessedColoursList.size(); i++){
-            for(int j = 0; j<shuffeledColoursList.size(); j++){
-                if(shuffeledColoursList.get(j).equals(userGuessedColoursList.get(i))){
-                    guessedColoursInTheirPositions ++;
-                }
+            if(shuffeledColoursList.get(i).equals(userGuessedColoursList.get(i))){
+                guessedColoursInTheirPositions ++;
             }
         }
         return guessedColoursInTheirPositions;
